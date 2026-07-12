@@ -20,12 +20,12 @@ import { useAuth } from "@/hooks/useAuth";
 import { authService } from "@/services/authService";
 
 const ROLES = [
-  "Fleet Manager",
-  "Dispatcher",
-  "Safety Officer",
-  "Financial Analyst",
+  { id: "Fleet Manager", icon: Radio },
+  { id: "Dispatcher", icon: Truck },
+  { id: "Safety Officer", icon: ShieldCheck },
+  { id: "Financial Analyst", icon: BarChart3 },
 ] as const;
-type Role = (typeof ROLES)[number];
+type Role = (typeof ROLES)[number]["id"];
 
 export default function LoginPage() {
   const router = useRouter();
@@ -170,8 +170,11 @@ export default function LoginPage() {
       </div>
 
       {/* Right form */}
-      <div className="flex items-center justify-center p-6 sm:p-12">
-        <div className="w-full max-w-md">
+      <div className="relative flex items-center justify-center p-6 sm:p-12">
+        {/* Subtle background glow behind the form */}
+        <div className="absolute top-1/2 left-1/2 size-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[100px]" />
+        
+        <div className="relative w-full max-w-md rounded-2xl border border-border bg-card/60 p-8 shadow-2xl backdrop-blur-xl sm:p-10">
           <div className="lg:hidden mb-8 flex items-center gap-3">
             <div className="grid size-10 place-items-center rounded-xl bg-gradient-primary">
               <Radio className="size-5 text-primary-foreground" />
@@ -179,7 +182,7 @@ export default function LoginPage() {
             <p className="font-display text-xl font-bold">TransitOps</p>
           </div>
 
-          <h1 className="font-display text-3xl font-bold">Welcome back</h1>
+          <h1 className="font-display text-4xl font-bold tracking-tight bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-transparent">Welcome back</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Sign in to your operations console. Demo credentials pre-filled.
           </p>
@@ -244,23 +247,25 @@ export default function LoginPage() {
               <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 Sign in as
               </label>
-              <div className="mt-2 grid grid-cols-2 gap-2">
+              <div className="mt-2 grid grid-cols-2 gap-3">
                 {ROLES.map((r) => {
-                  const active = r === role;
+                  const active = r.id === role;
+                  const Icon = r.icon;
                   return (
                     <button
                       type="button"
-                      key={r}
-                      onClick={() => setRole(r)}
+                      key={r.id}
+                      onClick={() => setRole(r.id)}
                       aria-pressed={active}
                       className={
-                        "rounded-lg border px-3 py-2 text-xs font-medium transition " +
+                        "group flex flex-col items-center gap-2 rounded-xl border p-4 text-center transition-all " +
                         (active
-                          ? "border-primary bg-primary/15 text-primary shadow-glow"
-                          : "border-border bg-card text-muted-foreground hover:border-primary/30 hover:text-foreground")
+                          ? "border-primary bg-primary/10 text-primary shadow-glow ring-1 ring-primary/30"
+                          : "border-border bg-card/50 text-muted-foreground hover:border-primary/40 hover:bg-muted/50 hover:text-foreground")
                       }
                     >
-                      {r}
+                      <Icon className={"size-5 transition-transform " + (active ? "scale-110" : "group-hover:scale-110")} />
+                      <span className="text-xs font-medium">{r.id}</span>
                     </button>
                   );
                 })}

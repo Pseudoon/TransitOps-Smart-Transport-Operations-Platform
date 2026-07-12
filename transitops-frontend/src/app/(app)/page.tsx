@@ -41,10 +41,10 @@ import {
 } from "@/lib/mock-data";
 
 const CHART_COLORS = [
-  "oklch(0.78 0.16 195)",
-  "oklch(0.82 0.17 75)",
-  "oklch(0.75 0.18 155)",
-  "oklch(0.68 0.2 320)",
+  "var(--chart-1)",
+  "var(--chart-2)",
+  "var(--chart-3)",
+  "var(--chart-4)",
 ];
 
 export default function DashboardPage() {
@@ -89,7 +89,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-3 animate-slide-up" style={{ animationDelay: "200ms" }}>
-        <div className="rounded-xl border border-white/10 bg-white/5 p-5 shadow-card backdrop-blur-md transition-transform hover:-translate-y-1 hover:border-primary/30 lg:col-span-2">
+        <div className="rounded-xl border border-border bg-card/80 p-5 shadow-card backdrop-blur-md transition-transform hover:-translate-y-1 hover:border-primary/30 lg:col-span-2">
           <div className="mb-4 flex items-center justify-between">
             <div>
               <h3 className="font-display text-lg font-semibold">Fleet Utilization — Last 7 days</h3>
@@ -124,7 +124,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-white/10 bg-white/5 p-5 shadow-card backdrop-blur-md transition-transform hover:-translate-y-1 hover:border-accent/30">
+        <div className="rounded-xl border border-border bg-card/80 p-5 shadow-card backdrop-blur-md transition-transform hover:-translate-y-1 hover:border-accent/30">
           <h3 className="font-display text-lg font-semibold">Cost Breakdown</h3>
           <p className="text-xs text-muted-foreground">Last 30 days · INR</p>
           <div className="mt-2 h-48">
@@ -153,7 +153,7 @@ export default function DashboardPage() {
 
       <div className="grid gap-4 lg:grid-cols-3 animate-slide-up" style={{ animationDelay: "300ms" }}>
         {/* Mock Map UI for Active Trips */}
-        <div className="relative overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-card backdrop-blur-md lg:col-span-2">
+        <div className="relative overflow-hidden rounded-xl border border-border bg-card/80 shadow-card backdrop-blur-md lg:col-span-2">
           {/* Mock Map Background */}
           <div className="absolute inset-0 bg-gradient-hero opacity-30" />
           <div className="absolute inset-0 grid-bg opacity-20" />
@@ -161,10 +161,10 @@ export default function DashboardPage() {
           <div className="relative flex h-full flex-col p-5">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <h3 className="font-display text-lg font-semibold text-white flex items-center gap-2">
+                <h3 className="font-display text-lg font-semibold text-foreground flex items-center gap-2">
                   <Map className="size-5 text-primary" /> Live Dispatch Map
                 </h3>
-                <p className="text-xs text-zinc-400">Real-time geospatial tracking</p>
+                <p className="text-xs text-muted-foreground">Real-time geospatial tracking</p>
               </div>
               <div className="flex items-center gap-2 rounded-full bg-primary/20 px-3 py-1 text-xs font-medium text-primary ring-1 ring-inset ring-primary/30">
                 <div className="size-1.5 animate-pulse rounded-full bg-primary" />
@@ -172,16 +172,16 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="relative flex-1 rounded-xl bg-black/40 border border-white/5 min-h-[300px] overflow-hidden">
+            <div className="relative flex-1 rounded-xl bg-muted/40 border border-border min-h-[300px] overflow-hidden">
               {/* Map UI Elements */}
               <div className="absolute left-1/4 top-1/3 grid size-12 place-items-center rounded-full bg-primary/20 ring-1 ring-primary/50 text-primary">
                 <Navigation className="size-5" />
-                <div className="absolute -bottom-8 whitespace-nowrap rounded bg-black/60 px-2 py-1 text-[10px] font-bold">T-1042</div>
+                <div className="absolute -bottom-8 whitespace-nowrap rounded bg-popover px-2 py-1 text-[10px] font-bold text-foreground shadow-sm">T-1042</div>
               </div>
               
               <div className="absolute right-1/3 bottom-1/4 grid size-10 place-items-center rounded-full bg-accent/20 ring-1 ring-accent/50 text-accent">
                 <Navigation className="size-4 rotate-45" />
-                <div className="absolute -bottom-8 whitespace-nowrap rounded bg-black/60 px-2 py-1 text-[10px] font-bold">T-1041</div>
+                <div className="absolute -bottom-8 whitespace-nowrap rounded bg-popover px-2 py-1 text-[10px] font-bold text-foreground shadow-sm">T-1041</div>
               </div>
 
               {/* Connecting abstract route line */}
@@ -193,8 +193,8 @@ export default function DashboardPage() {
         </div>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-white/10 bg-white/5 p-5 shadow-card backdrop-blur-md transition-transform hover:-translate-y-1 hover:border-info/30">
-            <h3 className="font-display text-lg font-semibold text-white">Fleet by Type</h3>
+          <div className="rounded-xl border border-border bg-card/80 p-5 shadow-card backdrop-blur-md transition-transform hover:-translate-y-1 hover:border-info/30">
+            <h3 className="font-display text-lg font-semibold text-foreground">Fleet by Type</h3>
             <div className="mt-3 h-40">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={fleetByType}>
@@ -233,7 +233,7 @@ export default function DashboardPage() {
           { icon: Wrench, label: "Log maintenance", href: "/maintenance" },
           { icon: Fuel, label: "Record fuel", href: "/fuel-expenses" },
         ].map((a) => (
-          <Link key={a.label} href={a.href} className="group flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-md transition-all hover:-translate-y-1 hover:border-primary/50 hover:bg-white/10 hover:shadow-glow">
+          <Link key={a.label} href={a.href} className="group flex items-center gap-3 rounded-xl border border-border bg-card/80 p-4 backdrop-blur-md transition-all hover:-translate-y-1 hover:border-primary/50 hover:bg-muted/40 hover:shadow-glow">
             <div className="grid size-10 place-items-center rounded-lg bg-primary/20 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
               <a.icon className="size-5" />
             </div>

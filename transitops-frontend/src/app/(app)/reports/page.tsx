@@ -19,11 +19,10 @@ import { PageHeader } from "@/components/common/PageHeader";
 import { fuelLogs, maintenanceLogs, trips, utilizationTrend, vehicles } from "@/lib/mock-data";
 
 const CHART_COLORS = [
-  "oklch(0.78 0.16 195)",
-  "oklch(0.82 0.17 75)",
-  "oklch(0.75 0.18 155)",
-  "oklch(0.68 0.2 320)",
-  "oklch(0.72 0.14 240)",
+  "var(--chart-1)",
+  "var(--chart-2)",
+  "var(--chart-3)",
+  "var(--chart-4)",
 ];
 
 function ChartCard({ title, subtitle, children }: { title: string; subtitle: string; children: React.ReactElement }) {
