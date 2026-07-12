@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { authService } from "@/services/authService";
+import { toast } from "sonner";
 
 const ROLES = [
   { id: "Fleet Manager", icon: Radio },
@@ -39,22 +40,22 @@ export default function LoginPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError(null);
     if (!email.includes("@")) {
-      setError("Please enter a valid email address.");
+      toast.error("Please enter a valid email address.");
       return;
     }
     if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
+      toast.error("Password must be at least 6 characters.");
       return;
     }
     setLoading(true);
     try {
       const data = await authService.login({ email, password });
       login(data.token, { name: data.name, role: data.role as any });
+      toast.success(`Welcome back, ${data.name}!`);
       router.push("/");
     } catch {
-      setError("Login failed. Please try again.");
+      toast.error("Login failed. Please check your credentials.");
     } finally {
       setLoading(false);
     }
@@ -272,14 +273,7 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {error && (
-              <p
-                role="alert"
-                className="rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-xs text-destructive"
-              >
-                {error}
-              </p>
-            )}
+            {/* Removed inline error rendering since we use toast now */}
 
             <button
               type="submit"
@@ -299,11 +293,15 @@ export default function LoginPage() {
               )}
             </button>
 
-            <p className="pt-2 text-center text-xs text-muted-foreground">
-              <Link href="/" className="text-primary hover:underline">
-                skip to dashboard
+            <div className="pt-4 flex justify-center">
+              <Link
+                href="/"
+                className="group flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold text-muted-foreground transition-all hover:bg-muted/50 hover:text-foreground"
+              >
+                Skip to dashboard
+                <ArrowRight className="size-3.5 opacity-50 transition-all group-hover:translate-x-1 group-hover:opacity-100" />
               </Link>
-            </p>
+            </div>
           </form>
         </div>
       </div>

@@ -40,6 +40,14 @@ import {
   vehicles,
 } from "@/lib/mock-data";
 
+import { useSimulatedData } from "@/hooks/useSimulatedData";
+
+import dynamic from "next/dynamic";
+
+const LiveMap = dynamic(() => import("@/components/LiveMap"), {
+  ssr: false,
+});
+
 const CHART_COLORS = [
   "var(--chart-1)",
   "var(--chart-2)",
@@ -48,7 +56,7 @@ const CHART_COLORS = [
 ];
 
 export default function DashboardPage() {
-  const k = computeKpis();
+  const { kpis: k } = useSimulatedData();
   const activeTrips = trips.filter(
     (t) => t.status === "Dispatched" || t.status === "Draft",
   );
@@ -173,21 +181,7 @@ export default function DashboardPage() {
             </div>
 
             <div className="relative flex-1 rounded-xl bg-muted/40 border border-border min-h-[300px] overflow-hidden">
-              {/* Map UI Elements */}
-              <div className="absolute left-1/4 top-1/3 grid size-12 place-items-center rounded-full bg-primary/20 ring-1 ring-primary/50 text-primary">
-                <Navigation className="size-5" />
-                <div className="absolute -bottom-8 whitespace-nowrap rounded bg-popover px-2 py-1 text-[10px] font-bold text-foreground shadow-sm">T-1042</div>
-              </div>
-              
-              <div className="absolute right-1/3 bottom-1/4 grid size-10 place-items-center rounded-full bg-accent/20 ring-1 ring-accent/50 text-accent">
-                <Navigation className="size-4 rotate-45" />
-                <div className="absolute -bottom-8 whitespace-nowrap rounded bg-popover px-2 py-1 text-[10px] font-bold text-foreground shadow-sm">T-1041</div>
-              </div>
-
-              {/* Connecting abstract route line */}
-              <svg className="absolute inset-0 size-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path d="M25,33 Q50,20 66,75" fill="none" stroke="oklch(0.75 0.20 205)" strokeWidth="0.5" strokeDasharray="2 2" className="opacity-50" />
-              </svg>
+              <LiveMap />
             </div>
           </div>
         </div>
