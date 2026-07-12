@@ -10,6 +10,7 @@ class TripBase(BaseModel):
     driver_id: str
     cargo_weight: float  # kg
     planned_distance: float  # km
+    revenue: float = 0  # money earned from this trip, used in ROI calc
     status: str = "Draft"
 
 
@@ -20,6 +21,7 @@ class TripCreate(TripBase):
 class TripComplete(BaseModel):
     final_odometer: float
     fuel_consumed: float  # liters
+    distance_km: Optional[float] = None  # actual distance travelled; falls back to planned_distance if omitted
 
 
 class TripOut(TripBase):

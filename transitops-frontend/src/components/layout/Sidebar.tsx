@@ -31,8 +31,8 @@ export function Sidebar() {
   return (
     <aside className="sticky top-0 flex h-screen w-64 shrink-0 flex-col border-r border-white/10 bg-sidebar transition-all z-30">
       <div className="flex items-center gap-2.5 px-5 py-5">
-        <div className="grid size-9 place-items-center rounded-lg bg-gradient-primary shadow-glow">
-          <Radio className="size-5 text-primary-foreground" />
+        <div className="relative size-10 shrink-0 overflow-hidden rounded-xl shadow-glow border border-white/10">
+          <img src="/logo.jpg?v=2" alt="TransitOps Logo" className="size-full object-cover object-center" />
         </div>
         <div className="min-w-0">
           <p className="font-display text-lg font-bold leading-none text-sidebar-foreground">

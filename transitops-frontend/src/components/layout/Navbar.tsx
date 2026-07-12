@@ -1,7 +1,8 @@
 "use client";
 
-import { Bell, Search, Sparkles } from "lucide-react";
+import { Search, Sparkles } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { NotificationsDropdown } from "@/components/NotificationsDropdown";
 
 export function Navbar() {
   return (
@@ -21,11 +22,8 @@ export function Navbar() {
           <Sparkles className="size-3.5 text-accent animate-pulse" />
           Ask Ops AI
         </button>
+        <NotificationsDropdown />
         <ThemeToggle />
-        <button className="relative grid size-9 place-items-center rounded-lg border border-border bg-card/80 text-muted-foreground transition hover:border-primary/20 hover:bg-muted/40 hover:text-foreground">
-          <Bell className="size-4" />
-          <span className="absolute right-1.5 top-1.5 size-1.5 animate-pulse rounded-full bg-destructive shadow-[0_0_8px_rgba(var(--destructive),0.8)]" />
-        </button>
         <div className="hidden items-center gap-2 rounded-lg border border-border bg-card px-2 py-1.5 sm:flex">
           <div className="grid size-7 place-items-center rounded-md bg-gradient-accent text-xs font-bold text-accent-foreground">
             FM
