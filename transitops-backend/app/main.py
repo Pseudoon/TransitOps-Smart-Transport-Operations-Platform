@@ -23,12 +23,16 @@ def health_check():
 
 
 # --- Mount routers here as they're built ---
-# --- Mount routers here as they're built ---
 from app.routers import auth, trips, maintenance, dashboard
 app.include_router(auth.router, prefix="/auth", tags=["Auth"])
 app.include_router(trips.router, prefix="/trips", tags=["Trips"])
 app.include_router(maintenance.router, prefix="/maintenance", tags=["Maintenance"])
 app.include_router(dashboard.router, prefix="/dashboard", tags=["Dashboard"])
+
+# from app.routers import auth, vehicles, drivers, trips, maintenance, fuel_expense, dashboard, reports
+# app.include_router(auth.router, prefix="/auth", tags=["Auth"])
+# app.include_router(vehicles.router, prefix="/vehicles", tags=["Vehicles"])
+# app.include_router(drivers.router, prefix="/drivers", tags=["Drivers"])
 # app.include_router(trips.router, prefix="/trips", tags=["Trips"])
 # app.include_router(maintenance.router, prefix="/maintenance", tags=["Maintenance"])
 # app.include_router(fuel_expense.router, tags=["Fuel & Expenses"])

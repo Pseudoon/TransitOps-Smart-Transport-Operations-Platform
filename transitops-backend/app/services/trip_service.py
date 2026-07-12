@@ -93,6 +93,9 @@ async def complete_trip(trip_id: str, payload: TripComplete) -> dict:
             f"Trip must be Dispatched to complete (current: {trip['status']})",
         )
 
+    # Fall back to planned_distance if actual distance_km isn't provided
+    distance_km = payload.distance_km if payload.distance_km is not None else trip["planned_distance"]
+
     await vehicles_collection.update_one(
         {"_id": ObjectId(trip["vehicle_id"])},
         {"$set": {"status": "Available", "odometer": payload.final_odometer}},
@@ -106,12 +109,12 @@ async def complete_trip(trip_id: str, payload: TripComplete) -> dict:
             "status": "Completed",
             "final_odometer": payload.final_odometer,
             "fuel_consumed": payload.fuel_consumed,
+            "distance_km": distance_km,
         }},
     )
 
     updated = await trips_collection.find_one({"_id": ObjectId(trip_id)})
     return _serialize(updated)
-
 
 async def cancel_trip(trip_id: str) -> dict:
     trip = await get_trip_or_404(trip_id)
