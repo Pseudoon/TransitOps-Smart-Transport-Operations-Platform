@@ -1,10 +1,7 @@
 import axios from "axios";
-
-export const USE_MOCKS = true;
-
+export const USE_MOCKS = false;
 const BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api";
-
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
 export const api = axios.create({
   baseURL: BASE_URL,
   headers: {

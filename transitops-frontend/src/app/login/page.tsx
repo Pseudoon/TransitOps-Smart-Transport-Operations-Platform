@@ -22,7 +22,7 @@ import { toast } from "sonner";
 
 const ROLES = [
   { id: "Fleet Manager", icon: Radio },
-  { id: "Dispatcher", icon: Truck },
+  { id: "Driver", icon: Truck },
   { id: "Safety Officer", icon: ShieldCheck },
   { id: "Financial Analyst", icon: BarChart3 },
 ] as const;
@@ -31,12 +31,11 @@ type Role = (typeof ROLES)[number]["id"];
 export default function LoginPage() {
   const router = useRouter();
   const { login } = useAuth();
-  const [email, setEmail] = useState("ops@transitops.io");
-  const [password, setPassword] = useState("demo1234");
+  const [email, setEmail] = useState("test@transitops.io");
+  const [password, setPassword] = useState("Test1234!");
   const [showPassword, setShowPassword] = useState(false);
   const [role, setRole] = useState<Role>("Fleet Manager");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -54,8 +53,12 @@ export default function LoginPage() {
       login(data.token, { name: data.name, role: data.role as any });
       toast.success(`Welcome back, ${data.name}!`);
       router.push("/");
-    } catch {
-      toast.error("Login failed. Please check your credentials.");
+    } catch (err: any) {
+      const backendMessage =
+        err?.response?.data?.detail ||
+        err?.message ||
+        "Login failed. Please check your credentials.";
+      toast.error(backendMessage);
     } finally {
       setLoading(false);
     }
@@ -92,7 +95,10 @@ export default function LoginPage() {
             <div className="w-full max-w-xl">
               <h2 className="font-display text-5xl font-bold leading-[1.1] tracking-tight text-white xl:text-6xl">
                 Every vehicle. <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Every driver.</span> <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+                  Every driver.
+                </span>{" "}
+                <br />
                 Every rupee.
               </h2>
               <p className="mt-6 max-w-lg text-lg leading-relaxed text-zinc-400">
@@ -109,8 +115,12 @@ export default function LoginPage() {
                       <Activity className="size-5" />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold text-white">Live Dispatch Activity</p>
-                      <p className="text-xs text-zinc-400">Updating in real-time...</p>
+                      <p className="text-sm font-semibold text-white">
+                        Live Dispatch Activity
+                      </p>
+                      <p className="text-xs text-zinc-400">
+                        Updating in real-time...
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 rounded-full bg-success/20 px-3 py-1 text-xs font-medium text-success ring-1 ring-inset ring-success/30">
@@ -118,7 +128,7 @@ export default function LoginPage() {
                     System Online
                   </div>
                 </div>
-                
+
                 <div className="mt-5 space-y-4">
                   <div className="flex items-center justify-between rounded-xl bg-black/40 p-4">
                     <div className="flex items-center gap-4">
@@ -127,17 +137,27 @@ export default function LoginPage() {
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <p className="font-mono text-sm font-bold text-white">T-1042</p>
-                          <span className="rounded bg-info/20 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-info">Dispatched</span>
+                          <p className="font-mono text-sm font-bold text-white">
+                            T-1042
+                          </p>
+                          <span className="rounded bg-info/20 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-info">
+                            Dispatched
+                          </span>
                         </div>
                         <div className="mt-1 flex items-center gap-1.5 text-xs font-medium text-zinc-400">
-                          <MapPin className="size-3.5 text-primary" /> Mumbai <ArrowRight className="size-3 text-zinc-600" /> Pune Hub
+                          <MapPin className="size-3.5 text-primary" /> Mumbai{" "}
+                          <ArrowRight className="size-3 text-zinc-600" /> Pune
+                          Hub
                         </div>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-xs uppercase tracking-wider text-zinc-500">ETA</p>
-                      <p className="font-mono text-sm font-medium text-white">14:30 IST</p>
+                      <p className="text-xs uppercase tracking-wider text-zinc-500">
+                        ETA
+                      </p>
+                      <p className="font-mono text-sm font-medium text-white">
+                        14:30 IST
+                      </p>
                     </div>
                   </div>
 
@@ -145,15 +165,23 @@ export default function LoginPage() {
                     <div className="flex flex-1 items-center gap-3 rounded-xl bg-black/40 p-4">
                       <ShieldCheck className="size-5 text-success" />
                       <div>
-                        <p className="text-xs uppercase tracking-wider text-zinc-500">Compliance</p>
-                        <p className="text-sm font-medium text-white">100% Cleared</p>
+                        <p className="text-xs uppercase tracking-wider text-zinc-500">
+                          Compliance
+                        </p>
+                        <p className="text-sm font-medium text-white">
+                          100% Cleared
+                        </p>
                       </div>
                     </div>
                     <div className="flex flex-1 items-center gap-3 rounded-xl bg-black/40 p-4">
                       <Zap className="size-5 text-warning" />
                       <div>
-                        <p className="text-xs uppercase tracking-wider text-zinc-500">Efficiency</p>
-                        <p className="text-sm font-medium text-white">Optimized Route</p>
+                        <p className="text-xs uppercase tracking-wider text-zinc-500">
+                          Efficiency
+                        </p>
+                        <p className="text-sm font-medium text-white">
+                          Optimized Route
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -174,7 +202,7 @@ export default function LoginPage() {
       <div className="relative flex items-center justify-center p-6 sm:p-12">
         {/* Subtle background glow behind the form */}
         <div className="absolute top-1/2 left-1/2 size-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/10 blur-[100px]" />
-        
+
         <div className="relative w-full max-w-md rounded-2xl border border-border bg-card/60 p-8 shadow-2xl backdrop-blur-xl sm:p-10">
           <div className="lg:hidden mb-8 flex items-center gap-3">
             <div className="grid size-10 place-items-center rounded-xl bg-gradient-primary">
@@ -183,9 +211,11 @@ export default function LoginPage() {
             <p className="font-display text-xl font-bold">TransitOps</p>
           </div>
 
-          <h1 className="font-display text-4xl font-bold tracking-tight bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-transparent">Welcome back</h1>
+          <h1 className="font-display text-4xl font-bold tracking-tight bg-gradient-to-br from-foreground to-foreground/60 bg-clip-text text-transparent">
+            Welcome back
+          </h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Sign in to your operations console. Demo credentials pre-filled.
+            Sign in to your operations console.
           </p>
 
           <form className="mt-8 space-y-4" onSubmit={handleSubmit} noValidate>
@@ -265,15 +295,22 @@ export default function LoginPage() {
                           : "border-border bg-card/50 text-muted-foreground hover:border-primary/40 hover:bg-muted/50 hover:text-foreground")
                       }
                     >
-                      <Icon className={"size-5 transition-transform " + (active ? "scale-110" : "group-hover:scale-110")} />
+                      <Icon
+                        className={
+                          "size-5 transition-transform " +
+                          (active ? "scale-110" : "group-hover:scale-110")
+                        }
+                      />
                       <span className="text-xs font-medium">{r.id}</span>
                     </button>
                   );
                 })}
               </div>
+              <p className="mt-2 text-[11px] text-muted-foreground">
+                Role selection here is for display only — your actual access
+                level comes from your account.
+              </p>
             </div>
-
-            {/* Removed inline error rendering since we use toast now */}
 
             <button
               type="submit"
