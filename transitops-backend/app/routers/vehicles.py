@@ -48,6 +48,24 @@ async def list_vehicles(
     return vehicles
 
 
+
+EXCLUDED_VEHICLE_STATUSES = ["Retired", "In Shop", "On Trip"]
+ 
+ 
+@router.get("/available", response_model=list[VehicleOut])
+async def list_available_vehicles():
+    """
+    GET /vehicles/available
+    Returns only vehicles eligible for dispatch:
+    excludes Retired, In Shop, and On Trip statuses.
+    """
+    query = {"status": {"$nin": EXCLUDED_VEHICLE_STATUSES}}
+ 
+    vehicles = []
+    async for doc in vehicles_collection.find(query):
+        vehicles.append(vehicle_helper(doc))
+    return vehicles
+ 
 @router.get("/{vehicle_id}", response_model=VehicleOut)
 async def get_vehicle(vehicle_id: str):
     """GET /vehicles/{id}"""
@@ -101,3 +119,4 @@ async def delete_vehicle(vehicle_id: str):
     if result.deleted_count == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Vehicle not found")
     return None
+
