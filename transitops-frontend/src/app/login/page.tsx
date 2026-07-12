@@ -12,6 +12,9 @@ import {
   Loader2,
   Eye,
   EyeOff,
+  MapPin,
+  Activity,
+  Zap,
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { authService } from "@/services/authService";
@@ -60,70 +63,109 @@ export default function LoginPage() {
   return (
     <div className="grid min-h-screen bg-background lg:grid-cols-2">
       {/* Left visual */}
-      <div className="relative hidden overflow-hidden bg-gradient-hero lg:block">
-        <div className="absolute inset-0 grid-bg opacity-40" />
-        <div className="relative flex h-full flex-col justify-between p-12">
+      <div className="relative hidden overflow-hidden bg-zinc-950 lg:flex lg:flex-col">
+        {/* Dynamic abstract background */}
+        <div className="absolute inset-0 bg-gradient-hero opacity-80" />
+        <div className="absolute inset-0 grid-bg opacity-30" />
+        <div className="absolute -left-1/4 -top-1/4 size-[800px] rounded-full bg-primary/20 blur-[120px]" />
+        <div className="absolute -bottom-1/4 -right-1/4 size-[600px] rounded-full bg-accent/20 blur-[120px]" />
+
+        <div className="relative flex flex-1 flex-col justify-between p-12 xl:p-16">
+          {/* Header */}
           <div className="flex items-center gap-3">
-            <div className="grid size-11 place-items-center rounded-xl bg-gradient-primary shadow-glow">
+            <div className="grid size-12 place-items-center rounded-xl bg-gradient-primary shadow-glow">
               <Radio className="size-6 text-primary-foreground" />
             </div>
             <div>
-              <p className="font-display text-xl font-bold">TransitOps</p>
-              <p className="text-xs uppercase tracking-widest text-muted-foreground">
+              <p className="font-display text-2xl font-bold tracking-tight text-white">
+                TransitOps
+              </p>
+              <p className="text-xs font-medium uppercase tracking-widest text-primary/80">
                 Fleet Control Console
               </p>
             </div>
           </div>
 
-          <div className="max-w-md">
-            <p className="text-xs font-semibold uppercase tracking-widest text-primary">
-              Smart Transport Operations
-            </p>
-            <h2 className="mt-3 font-display text-4xl font-bold leading-tight">
-              Every vehicle, every driver, every rupee — one console.
-            </h2>
-            <p className="mt-4 text-sm text-muted-foreground">
-              Dispatch smarter, spot idle assets, prevent expired licences, and
-              close the loop on fuel and maintenance costs in real time.
-            </p>
+          {/* Main Content (Centered vertically) */}
+          <div className="flex flex-col justify-center py-12">
+            <div className="w-full max-w-xl">
+              <h2 className="font-display text-5xl font-bold leading-[1.1] tracking-tight text-white xl:text-6xl">
+                Every vehicle. <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Every driver.</span> <br />
+                Every rupee.
+              </h2>
+              <p className="mt-6 max-w-lg text-lg leading-relaxed text-zinc-400">
+                Dispatch smarter, spot idle assets, prevent expired licences,
+                and close the loop on fuel and maintenance costs in real time.
+              </p>
 
-            <div className="mt-8 space-y-4">
-              {[
-                {
-                  icon: Truck,
-                  title: "Live fleet visibility",
-                  desc: "Know every vehicle's status the moment it changes.",
-                },
-                {
-                  icon: ShieldCheck,
-                  title: "Compliance by default",
-                  desc: "Expired licences and overloads blocked at dispatch.",
-                },
-                {
-                  icon: BarChart3,
-                  title: "Cost-to-serve analytics",
-                  desc: "Fuel, maintenance, and ROI on every asset.",
-                },
-              ].map(({ icon: Icon, title, desc }) => (
-                <div
-                  key={title}
-                  className="flex items-start gap-3 rounded-xl border border-border bg-card/50 p-3 backdrop-blur"
-                >
-                  <div className="grid size-9 shrink-0 place-items-center rounded-lg bg-primary/15 text-primary">
-                    <Icon className="size-4" />
+              {/* Mockup Floating Card */}
+              <div className="mt-12 group relative w-full rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-md shadow-2xl transition-transform hover:-translate-y-1">
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                <div className="relative flex items-center justify-between border-b border-white/10 pb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="grid size-10 place-items-center rounded-lg bg-primary/20 text-primary">
+                      <Activity className="size-5" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-white">Live Dispatch Activity</p>
+                      <p className="text-xs text-zinc-400">Updating in real-time...</p>
+                    </div>
                   </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold">{title}</p>
-                    <p className="text-xs text-muted-foreground">{desc}</p>
+                  <div className="flex items-center gap-2 rounded-full bg-success/20 px-3 py-1 text-xs font-medium text-success ring-1 ring-inset ring-success/30">
+                    <div className="size-1.5 animate-pulse rounded-full bg-success" />
+                    System Online
                   </div>
                 </div>
-              ))}
+                
+                <div className="mt-5 space-y-4">
+                  <div className="flex items-center justify-between rounded-xl bg-black/40 p-4">
+                    <div className="flex items-center gap-4">
+                      <div className="grid size-10 place-items-center rounded-full bg-zinc-800 text-zinc-300">
+                        <Truck className="size-5" />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <p className="font-mono text-sm font-bold text-white">T-1042</p>
+                          <span className="rounded bg-info/20 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-info">Dispatched</span>
+                        </div>
+                        <div className="mt-1 flex items-center gap-1.5 text-xs font-medium text-zinc-400">
+                          <MapPin className="size-3.5 text-primary" /> Mumbai <ArrowRight className="size-3 text-zinc-600" /> Pune Hub
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xs uppercase tracking-wider text-zinc-500">ETA</p>
+                      <p className="font-mono text-sm font-medium text-white">14:30 IST</p>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div className="flex flex-1 items-center gap-3 rounded-xl bg-black/40 p-4">
+                      <ShieldCheck className="size-5 text-success" />
+                      <div>
+                        <p className="text-xs uppercase tracking-wider text-zinc-500">Compliance</p>
+                        <p className="text-sm font-medium text-white">100% Cleared</p>
+                      </div>
+                    </div>
+                    <div className="flex flex-1 items-center gap-3 rounded-xl bg-black/40 p-4">
+                      <Zap className="size-5 text-warning" />
+                      <div>
+                        <p className="text-xs uppercase tracking-wider text-zinc-500">Efficiency</p>
+                        <p className="text-sm font-medium text-white">Optimized Route</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <p className="text-xs text-muted-foreground">
-            © 2026 TransitOps · Built for logistics teams that move.
-          </p>
+          {/* Footer */}
+          <div className="flex items-center justify-between text-xs text-zinc-500">
+            <p>© 2026 TransitOps</p>
+            <p>Built for logistics teams that move.</p>
+          </div>
         </div>
       </div>
 
@@ -253,7 +295,6 @@ export default function LoginPage() {
             </button>
 
             <p className="pt-2 text-center text-xs text-muted-foreground">
-              Prototype build —{" "}
               <Link href="/" className="text-primary hover:underline">
                 skip to dashboard
               </Link>

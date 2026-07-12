@@ -6,10 +6,12 @@ import {
   Wrench,
   Route as RouteIcon,
   Users,
+  Map,
   Activity,
   Fuel,
   AlertTriangle,
   ArrowUpRight,
+  Navigation,
 } from "lucide-react";
 import {
   Area,
@@ -79,15 +81,15 @@ export default function DashboardPage() {
         }
       />
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 animate-slide-up" style={{ animationDelay: "100ms" }}>
         <KpiCard label="Active Vehicles" value={k.onTrip} hint={`${k.available} available`} icon={Truck} accent="primary" trend={{ value: 12, positive: true }} />
         <KpiCard label="Active Trips" value={k.activeTrips} hint={`${k.pendingTrips} pending`} icon={RouteIcon} accent="accent" trend={{ value: 8, positive: true }} />
         <KpiCard label="Drivers On Duty" value={k.driversOnDuty} hint={`${drivers.length} total`} icon={Users} accent="success" trend={{ value: 3, positive: true }} />
         <KpiCard label="Fleet Utilization" value={`${k.utilization}%`} hint={`${k.inShop} in shop`} icon={Activity} accent="warning" trend={{ value: 5, positive: false }} />
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        <div className="rounded-xl border border-border bg-card p-5 shadow-card lg:col-span-2">
+      <div className="grid gap-4 lg:grid-cols-3 animate-slide-up" style={{ animationDelay: "200ms" }}>
+        <div className="rounded-xl border border-white/10 bg-white/5 p-5 shadow-card backdrop-blur-md transition-transform hover:-translate-y-1 hover:border-primary/30 lg:col-span-2">
           <div className="mb-4 flex items-center justify-between">
             <div>
               <h3 className="font-display text-lg font-semibold">Fleet Utilization — Last 7 days</h3>
@@ -122,7 +124,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-border bg-card p-5 shadow-card">
+        <div className="rounded-xl border border-white/10 bg-white/5 p-5 shadow-card backdrop-blur-md transition-transform hover:-translate-y-1 hover:border-accent/30">
           <h3 className="font-display text-lg font-semibold">Cost Breakdown</h3>
           <p className="text-xs text-muted-foreground">Last 30 days · INR</p>
           <div className="mt-2 h-48">
@@ -149,47 +151,50 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        <div className="rounded-xl border border-border bg-card shadow-card lg:col-span-2">
-          <div className="flex items-center justify-between border-b border-border px-5 py-4">
-            <h3 className="font-display text-lg font-semibold">Active & Pending Trips</h3>
-            <Link href="/trips" className="text-xs font-medium text-primary hover:underline">View all</Link>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="text-xs uppercase tracking-wider text-muted-foreground">
-                <tr>
-                  <th className="px-5 py-2.5 text-left">Trip</th>
-                  <th className="px-5 py-2.5 text-left">Route</th>
-                  <th className="px-5 py-2.5 text-left">Vehicle</th>
-                  <th className="px-5 py-2.5 text-left">Driver</th>
-                  <th className="px-5 py-2.5 text-right">Cargo</th>
-                  <th className="px-5 py-2.5 text-left">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {activeTrips.map((t) => {
-                  const v = vehicles.find((v) => v.id === t.vehicleId);
-                  const d = drivers.find((d) => d.id === t.driverId);
-                  return (
-                    <tr key={t.id} className="hover:bg-muted/40">
-                      <td className="px-5 py-3 font-mono text-xs text-primary">{t.id}</td>
-                      <td className="px-5 py-3"><div className="font-medium">{t.source}</div><div className="text-xs text-muted-foreground">→ {t.destination}</div></td>
-                      <td className="px-5 py-3 text-muted-foreground">{v?.name}</td>
-                      <td className="px-5 py-3 text-muted-foreground">{d?.name}</td>
-                      <td className="px-5 py-3 text-right font-mono">{t.cargoKg} kg</td>
-                      <td className="px-5 py-3"><StatusBadge status={t.status} /></td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+      <div className="grid gap-4 lg:grid-cols-3 animate-slide-up" style={{ animationDelay: "300ms" }}>
+        {/* Mock Map UI for Active Trips */}
+        <div className="relative overflow-hidden rounded-xl border border-white/10 bg-white/5 shadow-card backdrop-blur-md lg:col-span-2">
+          {/* Mock Map Background */}
+          <div className="absolute inset-0 bg-gradient-hero opacity-30" />
+          <div className="absolute inset-0 grid-bg opacity-20" />
+          
+          <div className="relative flex h-full flex-col p-5">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="font-display text-lg font-semibold text-white flex items-center gap-2">
+                  <Map className="size-5 text-primary" /> Live Dispatch Map
+                </h3>
+                <p className="text-xs text-zinc-400">Real-time geospatial tracking</p>
+              </div>
+              <div className="flex items-center gap-2 rounded-full bg-primary/20 px-3 py-1 text-xs font-medium text-primary ring-1 ring-inset ring-primary/30">
+                <div className="size-1.5 animate-pulse rounded-full bg-primary" />
+                Live Sync
+              </div>
+            </div>
+
+            <div className="relative flex-1 rounded-xl bg-black/40 border border-white/5 min-h-[300px] overflow-hidden">
+              {/* Map UI Elements */}
+              <div className="absolute left-1/4 top-1/3 grid size-12 place-items-center rounded-full bg-primary/20 ring-1 ring-primary/50 text-primary">
+                <Navigation className="size-5" />
+                <div className="absolute -bottom-8 whitespace-nowrap rounded bg-black/60 px-2 py-1 text-[10px] font-bold">T-1042</div>
+              </div>
+              
+              <div className="absolute right-1/3 bottom-1/4 grid size-10 place-items-center rounded-full bg-accent/20 ring-1 ring-accent/50 text-accent">
+                <Navigation className="size-4 rotate-45" />
+                <div className="absolute -bottom-8 whitespace-nowrap rounded bg-black/60 px-2 py-1 text-[10px] font-bold">T-1041</div>
+              </div>
+
+              {/* Connecting abstract route line */}
+              <svg className="absolute inset-0 size-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M25,33 Q50,20 66,75" fill="none" stroke="oklch(0.75 0.20 205)" strokeWidth="0.5" strokeDasharray="2 2" className="opacity-50" />
+              </svg>
+            </div>
           </div>
         </div>
 
         <div className="space-y-4">
-          <div className="rounded-xl border border-border bg-card p-5 shadow-card">
-            <h3 className="font-display text-lg font-semibold">Fleet by Type</h3>
+          <div className="rounded-xl border border-white/10 bg-white/5 p-5 shadow-card backdrop-blur-md transition-transform hover:-translate-y-1 hover:border-info/30">
+            <h3 className="font-display text-lg font-semibold text-white">Fleet by Type</h3>
             <div className="mt-3 h-40">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={fleetByType}>
@@ -204,7 +209,7 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="rounded-xl border border-warning/30 bg-warning/5 p-5 shadow-card">
+          <div className="rounded-xl border border-warning/40 bg-warning/10 p-5 shadow-card backdrop-blur-md transition-transform hover:-translate-y-1">
             <div className="flex items-center gap-2">
               <AlertTriangle className="size-4 text-warning" />
               <h3 className="font-display text-sm font-semibold">Licence Expiry Watch</h3>
@@ -221,15 +226,15 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 animate-slide-up" style={{ animationDelay: "400ms" }}>
         {[
           { icon: Truck, label: "Register vehicle", href: "/vehicles" },
           { icon: Users, label: "Add driver", href: "/drivers" },
           { icon: Wrench, label: "Log maintenance", href: "/maintenance" },
           { icon: Fuel, label: "Record fuel", href: "/fuel-expenses" },
         ].map((a) => (
-          <Link key={a.label} href={a.href} className="group flex items-center gap-3 rounded-xl border border-border bg-card p-4 transition hover:border-primary/40 hover:bg-muted/40">
-            <div className="grid size-10 place-items-center rounded-lg bg-primary/15 text-primary transition group-hover:bg-primary group-hover:text-primary-foreground">
+          <Link key={a.label} href={a.href} className="group flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-4 backdrop-blur-md transition-all hover:-translate-y-1 hover:border-primary/50 hover:bg-white/10 hover:shadow-glow">
+            <div className="grid size-10 place-items-center rounded-lg bg-primary/20 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
               <a.icon className="size-5" />
             </div>
             <div className="min-w-0 flex-1">

@@ -29,7 +29,7 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="sticky top-0 flex h-screen w-64 shrink-0 flex-col border-r border-sidebar-border bg-sidebar">
+    <aside className="sticky top-0 flex h-screen w-64 shrink-0 flex-col border-r border-white/10 bg-sidebar/80 backdrop-blur-xl transition-all">
       <div className="flex items-center gap-2.5 px-5 py-5">
         <div className="grid size-9 place-items-center rounded-lg bg-gradient-primary shadow-glow">
           <Radio className="size-5 text-primary-foreground" />
@@ -38,7 +38,7 @@ export function Sidebar() {
           <p className="font-display text-lg font-bold leading-none text-sidebar-foreground">
             TransitOps
           </p>
-          <p className="mt-0.5 text-[10px] uppercase tracking-widest text-muted-foreground">
+          <p className="mt-0.5 text-[10px] uppercase tracking-widest text-primary/80">
             Fleet Control
           </p>
         </div>
@@ -56,10 +56,10 @@ export function Sidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition",
+                "group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all hover:translate-x-1",
                 active
-                  ? "bg-sidebar-accent text-sidebar-primary shadow-inner ring-1 ring-primary/30"
-                  : "text-sidebar-foreground/70 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground",
+                  ? "bg-primary/15 text-primary shadow-[inset_0_0_20px_rgba(var(--primary),0.2)] ring-1 ring-primary/50 shadow-glow"
+                  : "text-sidebar-foreground/70 hover:bg-white/5 hover:text-white hover:ring-1 hover:ring-white/10",
               )}
             >
               <Icon
