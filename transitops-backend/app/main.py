@@ -23,6 +23,8 @@ def health_check():
 
 
 # --- Mount routers here as they're built ---
+from app.routers import auth
+app.include_router(auth.router, prefix="/auth", tags=["Auth"])
 # from app.routers import auth, vehicles, drivers, trips, maintenance, fuel_expense, dashboard, reports
 # app.include_router(auth.router, prefix="/auth", tags=["Auth"])
 # app.include_router(vehicles.router, prefix="/vehicles", tags=["Vehicles"])
