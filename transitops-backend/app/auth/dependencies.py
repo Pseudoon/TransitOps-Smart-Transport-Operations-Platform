@@ -17,4 +17,7 @@ def get_current_user(token: HTTPAuthorizationCredentials = Depends(token_auth_sc
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid or expired token",
         )
+
     return payload
+    return payload  # contains sub (user id), email, role
+

@@ -77,8 +77,8 @@ export default function LoginPage() {
         <div className="relative flex flex-1 flex-col justify-between p-12 xl:p-16">
           {/* Header */}
           <div className="flex items-center gap-3">
-            <div className="grid size-12 place-items-center rounded-xl bg-gradient-primary shadow-glow">
-              <Radio className="size-6 text-primary-foreground" />
+            <div className="relative size-14 shrink-0 overflow-hidden rounded-2xl shadow-glow border border-white/10">
+              <img src="/logo.jpg?v=2" alt="TransitOps Logo" className="size-full object-cover object-center" />
             </div>
             <div>
               <p className="font-display text-2xl font-bold tracking-tight text-white">
@@ -205,8 +205,8 @@ export default function LoginPage() {
 
         <div className="relative w-full max-w-md rounded-2xl border border-border bg-card/60 p-8 shadow-2xl backdrop-blur-xl sm:p-10">
           <div className="lg:hidden mb-8 flex items-center gap-3">
-            <div className="grid size-10 place-items-center rounded-xl bg-gradient-primary">
-              <Radio className="size-5 text-primary-foreground" />
+            <div className="relative size-12 shrink-0 overflow-hidden rounded-xl shadow-glow border border-white/10">
+              <img src="/logo.jpg?v=2" alt="TransitOps Logo" className="size-full object-cover object-center" />
             </div>
             <p className="font-display text-xl font-bold">TransitOps</p>
           </div>
